@@ -1,0 +1,8 @@
+.DS_Store
+*.pyc
+archive/*
+.ipynb_checkpoints/*
+ideas.txt
+side*
+tweets.sqlite
+credentials*
