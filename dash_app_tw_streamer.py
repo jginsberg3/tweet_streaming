@@ -109,7 +109,7 @@ app.layout = html.Div([
         ]),
 
         html.Div([
-            html.H2('Trending Tweets Per Minute')
+            html.H2('Trending Tweets Per Minute'),
             html.H4('This is the graph that uses the Dash Store data:'),
             dcc.Graph(id='test-store-graph'),  # using to test new store component
             html.H2('Here are the latest tweets:'),
