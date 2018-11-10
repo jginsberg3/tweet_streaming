@@ -89,51 +89,40 @@ def format_parsed_tweet_for_display(tw):
 app = dash.Dash()
 server = app.server
 
+# colors for formatting
+colors = {'darkBackground':'#2F4F4F'}
 
 # define app layout
 app.layout = html.Div([
-    html.Div([
-        html.H2('Awesome Header'),
-
-        dcc.Graph(id='tweets-per-min-graph',
-        ),
-
+    html.Div([    # div to hold invisible stuff
         dcc.Interval(id='tweets-per-min-interval',  # control how often the elements auto-update
             interval = 5 * 1000,  # 5 seconds (in milliseconds)
             n_intervals = 0,
             max_intervals=-1
         ),
-
+        
         html.Div([
             dcc.Store(id='query-results-store', storage_type='memory') # use to store query results
         ]),
-
+    ]),
+    
+    html. Div([    
         html.Div([
             html.H2('Trending Tweets Per Minute'),
             html.H4('This is the graph that uses the Dash Store data:'),
-            dcc.Graph(id='test-store-graph'),  # using to test new store component
+            dcc.Graph(id='test-store-graph'),  # using to test new store component            
+        ]),
+
+        html.Div([
             html.H2('Here are the latest tweets:'),
             html.Div(id='tweet-text-div')
         ])
     ])
-])
+], style={'backgroundColor':colors['darkBackground'],'color':'white'})  # note: font color is set by "color" keyword
 
 
 
-# define dash dynamic functions
-
-# update the update_tweets_per_minute_graph on the dcc tweets-per-min-interval
-@app.callback(
-    Output('tweets-per-min-graph', 'figure'),
-    [Input('tweets-per-min-interval','n_intervals')]
-)
-def update_tweets_per_minute_graph(n_intervals):
-    query_res = query_db(dbname, query_command, tweets_since_min)
-    x_minutes, y_counts = get_minute_plot_data(query_res)
-
-    plot_data = [go.Scatter(x=x_minutes, y=y_counts)]  # note: plot_data must be a LIST
-    graph = {'data':plot_data}
-    return graph
+### define dash dynamic functions
 
 
 # update the dcc.Store on the dcc tweets-per-min-interval
