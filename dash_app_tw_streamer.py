@@ -10,6 +10,8 @@ import pytz
 from functools import reduce
 import itertools
 
+tw_ts_format = '%Y-%m-%d %H:%M:%S'
+# this isn't the whole format, i chopped off the TZ at end of string b/c couldn't figure it out in strftime
 
 # set up database info
 dbname = 'tweets.sqlite'
@@ -44,7 +46,9 @@ def trunc_to_minute(dt_str):
     '''
     Truncate timestamp to minute (not round to nearest minute - truncate to minute)
     '''
-    dt = datetime.datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S%z')
+    # dt = datetime.datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S%z')
+    # as of 2019-04-20, twitter seems to have changed the format they use for their timestamps
+    dt = datetime.datetime.strptime(dt_str[:-6], tw_ts_format)
     return datetime.datetime(dt.year, dt.month, dt.day, dt.hour, dt.minute)
 
 def get_minute_plot_data(query_res):
@@ -66,7 +70,7 @@ def parse_tweet_time(tweet_row):
     '''
     Expect a row from the SQL query results and return both the parsed time of the tweet and the tweet text
     '''
-    parsed_ts = datetime.datetime.strptime(tweet_row[1], '%Y-%m-%d %H:%M:%S%z')
+    parsed_ts = datetime.datetime.strptime(tweet_row[1][:-6], tw_ts_format)
     nytz = pytz.timezone('America/New_York')
     parsed_ts_tz = parsed_ts.astimezone(nytz)
 

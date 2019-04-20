@@ -6,3 +6,5 @@ ideas.txt
 side*
 tweets.sqlite
 credentials*
+venv/*
+.vscode
