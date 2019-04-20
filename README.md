@@ -26,13 +26,10 @@ consumer_secret:[consumer_secret]
 
 ## Instructions to Run
 
-1. Create an anaconda environment using the environment.yml file
-    - Alternatively, use the environment file as a basis for creating a venv if not using anaconda
-2. Create a credentials file and add credentials as noted above.
-3. Run the tw_stream_listener notebook
-4. Run the recieve_and_parse_tweets notebook
-    - This will create a tweets.sqlite file that stores the tweets
-5. Run the dash_app_tw_streamer.py file to launch the webapp
+1. pip install the requirements.txt
+2. Run tweet_streamer.py to start getting the tweets from Twitter
+3. Run store_tweets.py to store the tweets to a local sqlite db
+4. Run dash_app_tw_streamer.py to start the webapp
 
 
 ## Future To-Dos
